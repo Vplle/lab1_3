@@ -1,15 +1,20 @@
-def bubble_sort(arr):
+def bubble_sort(arr, ascending=True):
     """
-    Сортировка пузырьком по возрастанию.
+    Сортировка пузырьком.
+    Если ascending=True - по возрастанию, иначе - по убыванию.
     """
     n = len(arr)
-    # Проходим по массиву n-1 раз
+
     for i in range(n - 1):
-        # Каждый проход уменьшаем область сравнения
         for j in range(0, n - i - 1):
-            # Если текущий элемент больше следующего, меняем их местами
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+            if ascending:
+                # Для сортировки по возрастанию
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+            else:
+                # Для сортировки по убыванию
+                if arr[j] < arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
 
 
@@ -41,14 +46,36 @@ def main():
         print("\nИсходный массив:")
         print(numbers)
 
-        # Сортируем массив
-        sorted_numbers = bubble_sort(numbers.copy())
+        # Запрашиваем направление сортировки
+        print("\n" + "=" * 30)
+        print("Выберите направление сортировки:")
+        print("1. По возрастанию (от меньшего к большему)")
+        print("2. По убыванию (от большего к меньшему)")
 
-        print("\nОтсортированный массив (по возрастанию):")
+        while True:
+            try:
+                choice = int(input("Ваш выбор (1 или 2): "))
+                if choice == 1:
+                    ascending = True
+                    direction_text = "по возрастанию"
+                    break
+                elif choice == 2:
+                    ascending = False
+                    direction_text = "по убыванию"
+                    break
+                else:
+                    print("Пожалуйста, введите 1 или 2!")
+            except ValueError:
+                print("Пожалуйста, введите число 1 или 2!")
+
+        # Сортируем массив в выбранном направлении
+        sorted_numbers = bubble_sort(numbers.copy(), ascending)
+
+        print(f"\nОтсортированный массив ({direction_text}):")
         print(sorted_numbers)
 
         # Красивый вывод
-        print("\nРезультат сортировки:")
+        print(f"\nРезультат сортировки {direction_text}:")
         for i, num in enumerate(sorted_numbers):
             print(f"{i + 1}. {num}")
 
